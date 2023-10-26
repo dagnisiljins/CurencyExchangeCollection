@@ -69,7 +69,8 @@ class Api
             $collection->add(new Convert(
                 $amountToConvert,
                 $dataOne->rates->$convertFrom,
-                $dataOne->rates->$convertTo
+                $dataOne->rates->$convertTo,
+                'exchangeratesapi.io'
             ));
         }
 
@@ -77,7 +78,8 @@ class Api
             $collection->add(new Convert(
                 $amountToConvert,
                 $dataTwo->results->$convertFrom,
-                $dataTwo->results->$convertTo
+                $dataTwo->results->$convertTo,
+                'fastforex.io'
             ));
         }
 
@@ -85,7 +87,8 @@ class Api
             $collection->add(new Convert(
                 $amountToConvert,
                 $dataThree->data->$convertFrom,
-                $dataThree->data->$convertTo
+                $dataThree->data->$convertTo,
+                'freecurrencyapi.com'
             ));
         }
         //var_dump($collection); die;
