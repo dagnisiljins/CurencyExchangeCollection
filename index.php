@@ -18,5 +18,9 @@ $apiFetcher = new Api();
 $conversion = $apiFetcher->search((float)$amount, strtoupper($currency), strtoupper($convertTo));
 //var_dump($conversion);
 
-$convertedAmount = $conversion->getCalculatedAmount();
-echo 'Converted amount is: ' . strtoupper($convertTo) . ' ' . round($convertedAmount, 2) . PHP_EOL;
+$convertedAmounts = [];
+foreach ($conversion->getConvertedCurrencies() as $convertedCurrency) {
+    $convertedAmounts[] = $convertedCurrency->getCalculatedAmount();
+}
+
+echo 'Converted amount is: ' . strtoupper($convertTo) . ' ' . implode(', ', $convertedAmounts) . PHP_EOL;
