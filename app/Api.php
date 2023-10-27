@@ -96,6 +96,3 @@ class Api
         return $collection;
     }
 }
-
-//1key
-//2key = https://api.fastforex.io/fetch-multi?from=EUR&to=USD%2CCAD&api_key=9b90679c31-79fb67c9e2-s34pn7
