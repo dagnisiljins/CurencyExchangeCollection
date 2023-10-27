@@ -16,18 +16,18 @@ class Api
 
     public function __construct()
     {
-        $this->apiOne = 'http://api.exchangeratesapi.io/v1/latest?access_key=4755858ee8f52d30b1b91c8d9c04a098&symbols=';
+        $this->apiOne = 'http://api.exchangeratesapi.io/v1/latest?access_key=';
         $this->apiTwo = 'https://api.fastforex.io/fetch-multi?from=EUR&to=';
-        $this->apiThree = 'https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_yJgcD8lZ913Yvczl76XOctSY8H3QAJYDLhj0yb8F';
+        $this->apiThree = 'https://api.freecurrencyapi.com/v1/latest?apikey=';
     }
 
     public function search(float $amountToConvert, string $convertFrom, string $convertTo)
     {
 
-        $client = new Client();
-
         // API One
-        $urlOne = $this->apiOne . urlencode($convertFrom) . ',' . urlencode($convertTo);
+        $client = new Client();
+        $apiKeyOne = $_ENV['API_KEY_ONE'];
+        $urlOne = $this->apiOne . $apiKeyOne . '&symbols=' . urlencode($convertFrom) . ',' . urlencode($convertTo);
         try {
             $responseOne = $client->get($urlOne);
             $dataOne = json_decode($responseOne->getBody()->getContents());
@@ -40,7 +40,7 @@ class Api
         $clientTwo = new Client([
             'verify' => 'C:/CA certificates/cacert.pem',
         ]);
-        $apiKeyTwo = '9b90679c31-79fb67c9e2-s34pn7';
+        $apiKeyTwo = $_ENV['API_KEY_TWO'];
         $urlTwo = $this->apiTwo . urlencode($convertFrom) . '%2C' . urlencode($convertTo) . '&api_key=' . urlencode($apiKeyTwo);
         try {
             $responseTwo = $clientTwo->get($urlTwo);
@@ -54,7 +54,8 @@ class Api
         $clientThree = new Client([
             'verify' => 'C:/CA certificates/cacert.pem',
         ]);
-        $urlThree = $this->apiThree . '&currencies=EUR%2C' . urlencode($convertFrom) . '%2C' . urlencode($convertTo);
+        $apiKeyThree = $_ENV['API_KEY_THREE'];
+        $urlThree = $this->apiThree . $apiKeyThree . '&currencies=EUR%2C' . urlencode($convertFrom) . '%2C' . urlencode($convertTo);
         try {
             $responseThree = $clientThree->get($urlThree);
             $dataThree = json_decode($responseThree->getBody()->getContents());

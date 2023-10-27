@@ -5,6 +5,9 @@ declare(strict_types=1);
 require_once 'vendor/autoload.php';
 use App\Api;
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 $convertRequest = readline('Enter the amount and currency to convert from(Ex.100 USD): ');
 list($amount, $currency) = explode(' ', $convertRequest);
 
@@ -27,21 +30,12 @@ arsort($convertedAmounts);
 
 $highestExchangeRateSource = key($convertedAmounts);
 $highestValue = reset($convertedAmounts);
-echo 'Highest exchange rate source: ' . $highestExchangeRateSource . ' - ' . strtoupper($convertTo) . ' ' . $highestValue . PHP_EOL;
+echo 'Highest exchange rate: ' . $highestExchangeRateSource . ' - ' . strtoupper($convertTo) . ' ' . $highestValue . PHP_EOL;
 
-// Remove the highest value and display the rest in order
+
 unset($convertedAmounts[$highestExchangeRateSource]);
-echo 'Other exchange rate sources: ';
+echo 'Other exchange rates: ';
 foreach ($convertedAmounts as $source => $amount) {
     echo $source . ' - ' . strtoupper($convertTo) . ' ' . $amount . ', ';
 }
 echo PHP_EOL;
-
-/*$convertedAmounts = [];
-foreach ($conversion->getConvertedCurrencies() as $convertedCurrency) {
-    $convertedAmounts[] = $convertedCurrency->getCalculatedAmount();
-}
-
-
-echo 'Converted amount is: ' . strtoupper($convertTo) . ' ' . implode(', ', $convertedAmounts) . PHP_EOL;
-*/
